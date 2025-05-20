@@ -1,12 +1,14 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Search, Filter, Trash2, Edit, BookOpen } from "lucide-react";
+import { Plus, Search, Filter } from "lucide-react";
 import { Word } from '@/types/vocabulary';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
+import WordList from './word-components/WordList';
+import AddWordForm from './word-components/AddWordForm';
+import WordListCollection from './word-components/WordListCollection';
 
 // Mock data for demonstration
 const mockWords: Word[] = [
@@ -151,66 +153,12 @@ const PersonalVocabulary = () => {
             </TabsList>
             <TabsContent value="words" className="space-y-4">
               {showAddWordForm && (
-                <Card className="mb-6 border-blue-200 bg-blue-50">
-                  <CardHeader className="pb-4">
-                    <CardTitle className="text-lg">Add New Word</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid gap-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label htmlFor="term" className="block text-sm font-medium mb-1">Word/Term*</label>
-                          <Input
-                            id="term"
-                            value={newWord.term}
-                            onChange={(e) => setNewWord({...newWord, term: e.target.value})}
-                            placeholder="Enter word or term"
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="partOfSpeech" className="block text-sm font-medium mb-1">Part of Speech</label>
-                          <Input
-                            id="partOfSpeech"
-                            value={newWord.partOfSpeech}
-                            onChange={(e) => setNewWord({...newWord, partOfSpeech: e.target.value})}
-                            placeholder="e.g., noun, verb, adjective"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label htmlFor="definition" className="block text-sm font-medium mb-1">Definition*</label>
-                        <Input
-                          id="definition"
-                          value={newWord.definition}
-                          onChange={(e) => setNewWord({...newWord, definition: e.target.value})}
-                          placeholder="Enter definition"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="example" className="block text-sm font-medium mb-1">Example Sentence</label>
-                        <Input
-                          id="example"
-                          value={newWord.example}
-                          onChange={(e) => setNewWord({...newWord, example: e.target.value})}
-                          placeholder="Enter an example sentence"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="etymology" className="block text-sm font-medium mb-1">Etymology</label>
-                        <Input
-                          id="etymology"
-                          value={newWord.etymology || ''}
-                          onChange={(e) => setNewWord({...newWord, etymology: e.target.value})}
-                          placeholder="Enter word origin"
-                        />
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <Button variant="outline" onClick={() => setShowAddWordForm(false)}>Cancel</Button>
-                    <Button onClick={addWord} disabled={!newWord.term || !newWord.definition}>Add Word</Button>
-                  </CardFooter>
-                </Card>
+                <AddWordForm 
+                  newWord={newWord}
+                  setNewWord={setNewWord}
+                  addWord={addWord}
+                  onCancel={() => setShowAddWordForm(false)}
+                />
               )}
 
               <div className="flex gap-2 mb-6">
@@ -229,109 +177,11 @@ const PersonalVocabulary = () => {
                 </Button>
               </div>
 
-              <div className="divide-y">
-                {filteredWords.length > 0 ? (
-                  filteredWords.map(word => (
-                    <div key={word.id} className="py-4">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-medium text-lg flex items-center gap-2">
-                            {word.term} 
-                            <span className="text-xs px-2 py-1 bg-gray-100 rounded text-gray-600">{word.partOfSpeech}</span>
-                            {word.level === 'advanced' && (
-                              <span className="text-xs px-2 py-1 bg-purple-100 rounded text-purple-600">Advanced</span>
-                            )}
-                          </h3>
-                          <p className="text-gray-700 mt-1">{word.definition}</p>
-                          {word.example && <p className="text-gray-500 italic text-sm mt-1">"{word.example}"</p>}
-                          
-                          {/* Additional word information */}
-                          {word.etymology && (
-                            <div className="mt-2">
-                              <p className="text-sm text-gray-600"><span className="font-medium">Origin:</span> {word.etymology}</p>
-                            </div>
-                          )}
-                          
-                          {word.synonyms && word.synonyms.length > 0 && (
-                            <div className="mt-1">
-                              <p className="text-sm text-gray-600">
-                                <span className="font-medium">Synonyms:</span> {word.synonyms.join(", ")}
-                              </p>
-                            </div>
-                          )}
-                          
-                          {word.tags && word.tags.length > 0 && (
-                            <div className="flex gap-1 mt-2 flex-wrap">
-                              {word.tags.map(tag => (
-                                <span key={tag} className="text-xs px-2 py-1 bg-gray-100 rounded text-gray-600">#{tag}</span>
-                              ))}
-                            </div>
-                          )}
-                          
-                          <div className="mt-2">
-                            <div className="h-1.5 w-36 bg-gray-200 rounded-full overflow-hidden">
-                              <div 
-                                className="h-full bg-primary" 
-                                style={{ width: `${(word.masteryLevel / 5) * 100}%` }}
-                              />
-                            </div>
-                            <span className="text-xs text-gray-500 mt-1">Mastery: {word.masteryLevel}/5</span>
-                          </div>
-                        </div>
-                        <div className="flex gap-2">
-                          <Button variant="ghost" size="icon">
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="py-8 text-center">
-                    <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
-                      <BookOpen className="h-6 w-6 text-gray-400" />
-                    </div>
-                    <h3 className="text-lg font-medium">No words found</h3>
-                    <p className="text-gray-500 mt-1">
-                      {searchTerm ? 'Try a different search term' : 'Add your first word to get started'}
-                    </p>
-                  </div>
-                )}
-              </div>
+              <WordList words={filteredWords} />
             </TabsContent>
 
             <TabsContent value="lists">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-medium">Your Word Lists</h3>
-                  <Button>
-                    <Plus className="mr-2 h-4 w-4" /> Create List
-                  </Button>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {mockWordLists.map(list => (
-                    <Card key={list.id} className="hover:shadow-md transition-shadow">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">{list.name}</CardTitle>
-                        <CardDescription>{list.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex justify-between text-sm">
-                          <span>{list.wordCount} words</span>
-                          <span className="text-gray-500">Updated {list.lastModified}</span>
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Button variant="outline" className="w-full">View List</Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </div>
+              <WordListCollection wordLists={mockWordLists} />
             </TabsContent>
           </Tabs>
         </CardContent>
