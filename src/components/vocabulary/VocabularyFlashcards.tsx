@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeftCircle, ArrowRightCircle, BookOpen, CheckCircle, XCircle, RotateCcw, VolumeUp } from "lucide-react";
+import { ArrowLeftCircle, ArrowRightCircle, BookOpen, CheckCircle, XCircle, RotateCcw, Volume } from "lucide-react";
 import { Word } from '@/types/vocabulary';
 
 // Mock flashcard data
@@ -173,7 +173,7 @@ const VocabularyFlashcards = () => {
                   <div className="mt-4 flex items-center gap-2 text-gray-500">
                     <span>{currentCard.pronunciation}</span>
                     <Button onClick={(e) => { e.stopPropagation(); playAudio(); }} variant="ghost" size="sm" className="rounded-full p-1">
-                      <VolumeUp className="h-4 w-4" />
+                      <Volume className="h-4 w-4" />
                     </Button>
                   </div>
                 )}

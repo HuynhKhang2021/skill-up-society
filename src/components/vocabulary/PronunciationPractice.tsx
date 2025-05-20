@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Headphones, Mic, VolumeUp, MicOff, Check, X, RefreshCw } from "lucide-react";
+import { Headphones, Mic, Volume, MicOff, Check, X, RefreshCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 // Mock pronunciation challenges
@@ -183,7 +183,7 @@ const PronunciationPractice = () => {
                 <h3 className="text-3xl font-bold mb-2">{currentChallenge.word}</h3>
                 <p className="text-gray-600 mb-4">{currentChallenge.phonetic}</p>
                 <Button variant="outline" onClick={handlePlayAudio} className="mb-6">
-                  <VolumeUp className="mr-2 h-4 w-4" />
+                  <Volume className="mr-2 h-4 w-4" />
                   Listen
                 </Button>
                 
@@ -284,11 +284,11 @@ const PronunciationPractice = () => {
                   <CardContent className="pb-4 pt-0">
                     <div className="flex justify-around">
                       <Button variant="outline" size="sm">
-                        <VolumeUp className="mr-1 h-3 w-3" />
+                        <Volume className="mr-1 h-3 w-3" />
                         {item.pair[0]}
                       </Button>
                       <Button variant="outline" size="sm">
-                        <VolumeUp className="mr-1 h-3 w-3" />
+                        <Volume className="mr-1 h-3 w-3" />
                         {item.pair[1]}
                       </Button>
                     </div>
@@ -345,7 +345,7 @@ const PronunciationPractice = () => {
             <CardContent className="space-y-4">
               <div className="flex justify-center my-6">
                 <Button>
-                  <VolumeUp className="mr-2 h-4 w-4" />
+                  <Volume className="mr-2 h-4 w-4" />
                   Play Audio
                 </Button>
               </div>
