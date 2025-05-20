@@ -12,6 +12,7 @@ import SpeakingPage from "./pages/SpeakingPage";
 import ListeningPage from "./pages/ListeningPage";
 import ChatPage from "./pages/ChatPage";
 import ProfilePage from "./pages/ProfilePage";
+import VocabularyPage from "./pages/VocabularyPage";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/skills/listening" element={<ListeningPage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/vocabulary" element={<VocabularyPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

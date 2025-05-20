@@ -37,6 +37,9 @@ const MobileMenu = () => {
           <Link to="/skills/listening" className="text-lg font-medium">
             Listening
           </Link>
+          <Link to="/vocabulary" className="text-lg font-medium">
+            Vocabulary
+          </Link>
           <Link to="/chat" className="text-lg font-medium">
             Community Chat
           </Link>

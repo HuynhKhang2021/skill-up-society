@@ -42,6 +42,11 @@ const Footer = () => {
                   Listening
                 </Link>
               </li>
+              <li>
+                <Link to="/vocabulary" className="text-sm text-gray-600 hover:text-primary">
+                  Vocabulary
+                </Link>
+              </li>
             </ul>
           </div>
           
