@@ -40,6 +40,11 @@ const Navbar = () => {
               <MessageCircle className="h-5 w-5" />
             </Button>
           </Link>
+          <Link to="/auth">
+            <Button variant="primary" size="sm" className="hidden sm:flex">
+              Sign In
+            </Button>
+          </Link>
           <Link to="/profile">
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />

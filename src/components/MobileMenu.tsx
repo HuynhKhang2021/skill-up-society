@@ -46,6 +46,9 @@ const MobileMenu = () => {
           <Link to="/profile" className="text-lg font-medium">
             Profile
           </Link>
+          <Link to="/auth" className="text-lg font-medium text-primary">
+            Sign In / Sign Up
+          </Link>
         </nav>
       </SheetContent>
     </Sheet>
