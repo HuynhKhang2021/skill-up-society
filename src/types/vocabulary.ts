@@ -13,6 +13,21 @@ export interface Word {
   learned: boolean;
   lastReviewed?: Date;
   masteryLevel: number; // 0-5 where 5 is mastered
+  
+  // Additional word data
+  etymology?: string;
+  synonyms?: string[];
+  antonyms?: string[];
+  collocations?: string[];
+  notes?: string;
+  usageExamples?: string[];
+  relatedWords?: {
+    word: string;
+    relationship: string;
+  }[];
+  mnemonicDevice?: string;
+  difficultyScore?: number; // 1-10 where 10 is most difficult
+  languageOrigin?: string;
 }
 
 export interface WordList {

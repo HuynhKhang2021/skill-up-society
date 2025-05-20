@@ -41,7 +41,7 @@ const Navbar = () => {
             </Button>
           </Link>
           <Link to="/auth">
-            <Button variant="primary" size="sm" className="hidden sm:flex">
+            <Button variant="default" size="sm" className="hidden sm:flex">
               Sign In
             </Button>
           </Link>

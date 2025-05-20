@@ -20,7 +20,17 @@ const mockWords: Word[] = [
     tags: ["luck", "discovery", "fortune"],
     pronunciation: "/ˌsɛr.ənˈdɪp.ɪ.ti/",
     learned: true,
-    masteryLevel: 4
+    masteryLevel: 4,
+    etymology: "From the Persian fairy tale 'The Three Princes of Serendip', where the heroes were always making discoveries by accident.",
+    synonyms: ["chance", "fortune", "luck", "providence", "happenstance"],
+    antonyms: ["misfortune", "calamity", "misery"],
+    collocations: ["happy serendipity", "mere serendipity", "pure serendipity"],
+    usageExamples: [
+      "Their meeting was a serendipity that changed both their lives.",
+      "We found the restaurant by sheer serendipity when we got lost."
+    ],
+    languageOrigin: "Persian/English",
+    mnemonicDevice: "Think of 'serene' + 'dipity' - a peaceful dip into good fortune"
   },
   {
     id: "2",
@@ -32,7 +42,12 @@ const mockWords: Word[] = [
     tags: ["temporary", "fleeting", "brief"],
     pronunciation: "/ɪˈfɛm.ər.əl/",
     learned: false,
-    masteryLevel: 2
+    masteryLevel: 2,
+    etymology: "From Greek 'ephemeros' meaning 'lasting only a day'",
+    synonyms: ["fleeting", "transitory", "transient", "momentary", "brief"],
+    antonyms: ["permanent", "enduring", "eternal", "everlasting"],
+    collocations: ["ephemeral beauty", "ephemeral nature", "ephemeral phenomenon"],
+    languageOrigin: "Greek"
   },
   {
     id: "3",
@@ -44,7 +59,11 @@ const mockWords: Word[] = [
     tags: ["everywhere", "common", "omnipresent"],
     pronunciation: "/juːˈbɪk.wɪ.təs/",
     learned: true,
-    masteryLevel: 3
+    masteryLevel: 3,
+    etymology: "From Latin 'ubique' meaning 'everywhere'",
+    synonyms: ["omnipresent", "pervasive", "universal", "worldwide"],
+    antonyms: ["rare", "scarce", "uncommon", "limited"],
+    difficultyScore: 8
   }
 ];
 
@@ -176,6 +195,15 @@ const PersonalVocabulary = () => {
                           placeholder="Enter an example sentence"
                         />
                       </div>
+                      <div>
+                        <label htmlFor="etymology" className="block text-sm font-medium mb-1">Etymology</label>
+                        <Input
+                          id="etymology"
+                          value={newWord.etymology || ''}
+                          onChange={(e) => setNewWord({...newWord, etymology: e.target.value})}
+                          placeholder="Enter word origin"
+                        />
+                      </div>
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-between">
@@ -216,6 +244,22 @@ const PersonalVocabulary = () => {
                           </h3>
                           <p className="text-gray-700 mt-1">{word.definition}</p>
                           {word.example && <p className="text-gray-500 italic text-sm mt-1">"{word.example}"</p>}
+                          
+                          {/* Additional word information */}
+                          {word.etymology && (
+                            <div className="mt-2">
+                              <p className="text-sm text-gray-600"><span className="font-medium">Origin:</span> {word.etymology}</p>
+                            </div>
+                          )}
+                          
+                          {word.synonyms && word.synonyms.length > 0 && (
+                            <div className="mt-1">
+                              <p className="text-sm text-gray-600">
+                                <span className="font-medium">Synonyms:</span> {word.synonyms.join(", ")}
+                              </p>
+                            </div>
+                          )}
+                          
                           {word.tags && word.tags.length > 0 && (
                             <div className="flex gap-1 mt-2 flex-wrap">
                               {word.tags.map(tag => (
@@ -223,6 +267,7 @@ const PersonalVocabulary = () => {
                               ))}
                             </div>
                           )}
+                          
                           <div className="mt-2">
                             <div className="h-1.5 w-36 bg-gray-200 rounded-full overflow-hidden">
                               <div 
